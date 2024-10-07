@@ -1,57 +1,31 @@
-function add(number1, number2) {
-    return number1 + number2;
-}
+function checkAnswer() {
+    const correctAnswer = "4";
+    const userAnswer = document.querySelector('input[name="quiz"]:checked');
 
+    if (userAnswer) {
+        const userAnswerValue = userAnswer.value;
 
-
-
-function subtract(number1, number2) {
-    return number1 - number2;
-}
-
-
-
-
-function multiply(number1, number2) {
-    return number1 * number2;
-}
-
-
-
-
-function divide(number1, number2) {
-    if (number2 === 0) {
-        return "Cannot divide by zero";
+        if (userAnswerValue === correctAnswer) {
+            document.getElementById('feedback').textContent = "Correct! Well done.";
+            document.getElementById('feedback').classList.add('correct');
+            document.getElementById('feedback').classList.remove('incorrect');
+        } else {
+            document.getElementById('feedback').textContent = "That's incorrect. The correct answer is " + correctAnswer + ".";
+            document.getElementById('feedback').classList.add('incorrect');
+            document.getElementById('feedback').classList.remove('correct');
+        }
     } else {
-        return number1 / number2;
+        document.getElementById('feedback').textContent = "Please select an answer.";
+        document.getElementById('feedback').classList.remove('correct', 'incorrect');
     }
 }
 
-// Event listeners for buttons
-document.getElementById('add').addEventListener('click', function() {
-    const number1 = parseFloat(document.getElementById('number1').value) || 0;
-    const number2 = parseFloat(document.getElementById('number2').value) || 0;
-    const result = add(number1, number2);
-    document.getElementById('calculation-result').textContent = result;
-});
+const submitButton = document.getElementById('submit-answer');
+submitButton.addEventListener('click', checkAnswer);
 
-document.getElementById('subtract').addEventListener('click', function() {
-    const number1 = parseFloat(document.getElementById('number1').value) || 0;
-    const number2 = parseFloat(document.getElementById('number2').value) || 0;
-    const result = subtract(number1, number2);
-    document.getElementById('calculation-result').textContent = result;
-});
-
-document.getElementById('multiply').addEventListener('click', function() {
-    const number1 = parseFloat(document.getElementById('number1').value) || 0;
-    const number2 = parseFloat(document.getElementById('number2').value) || 0;
-    const result = multiply(number1, number2);
-    document.getElementById('calculation-result').textContent = result;
-});
-
-document.getElementById('divide').addEventListener('click', function() {
-    const number1 = parseFloat(document.getElementById('number1').value) || 0;
-    const number2 = parseFloat(document.getElementById('number2').value) || 0;
-    const result = divide(number1, number2);
-    document.getElementById('calculation-result').textContent = result;
+document.querySelectorAll('input[name="quiz"]').forEach((input) => {
+    input.addEventListener('change', () => {
+        document.getElementById('feedback').textContent = "";
+        document.getElementById('feedback').classList.remove('correct', 'incorrect');
+    });
 });
